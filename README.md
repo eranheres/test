@@ -10,15 +10,15 @@ Tel-Aviv (map)
 ```
 
 ## Our dream...
-Apkalypse is a cloud-enabled solution for setting-up, provisioning and building Android applications. Apkalypse eliminate the need to handle and maintain Android build machines. Just pick and choose your build environment flavour, point to your cloud hosted game repository and let it go... Use your own AWS account for processing the build.
+Apkalypse is a cloud-enabled solution for setting-up, provisioning and building Android applications. Apkalypse eliminates the need to handle and maintain Android build machines. Just pick and choose your build environment flavor, point to your cloud-hosted app repository and let it go... Use your own AWS account for processing the build.
   - out-of-the-box various stable SDK environments to choose from which to build your app
   - easy, zero installation, single command to build and bind them all
   - access to GitHub and SVN hosted repositories
   - choose between using your reserved instances or apply for spot bids
-  - out-of-the-box jenkins setup to operate your builds
+  - out-of-the-box Jenkins setup to operate your builds
 
 ## Who can join
-Anyone with a laptop and some basic knowladge in eaither Android App build and/or CI and/or AWS containers technologies
+Anyone with a laptop and some basic knowledge in either Android App builds and/or CI and/or AWS containers technologies
 
 ## How to prepare...
 Bring your laptop, brain and good spirit.. We will take it from there :)
