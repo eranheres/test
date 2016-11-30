@@ -9,8 +9,8 @@ Floor 34rd (Electra Tower)
 Tel-Aviv (map)
 ```
 
-## Ourream...
-Apkalypse is a cloud-enabled solution for setting-up, provisioning and building Android applications. Apkalypse provides :
+## Our dream...
+Apkalypse is a cloud-enabled solution for setting-up, provisioning and building Android applications. Apkalypse eliminate the need to handle and maintain Android build machines. Just pick and choose your build environment flavour, point to your cloud hosted game repository and let it go... Use your own AWS account for processing the build.
   - out-of-the-box various stable SDK environments to choose from which to build your app
   - easy, zero installation, single command to build and bind them all
   - access to GitHub and SVN hosted repositories
