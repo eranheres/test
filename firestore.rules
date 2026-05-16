@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /events/{eventId} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasAll(['name','dates','createdAt'])
+                   && request.resource.data.dates.size() >= 1
+                   && request.resource.data.dates.size() <= 30;
+      allow update, delete: if false;
+
+      match /responses/{responseId} {
+        allow read: if true;
+        allow create: if request.resource.data.keys().hasAll(['name','votes','createdAt'])
+                     && request.resource.data.name.size() >= 1;
+        allow update, delete: if false;
+      }
+    }
+  }
+}
