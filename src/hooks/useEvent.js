@@ -4,10 +4,9 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
-export async function createEvent(name, dates) {
+export async function createEvent(name, startDate, endDate, duration) {
   const ref = await addDoc(collection(db, 'events'), {
-    name,
-    dates,
+    name, startDate, endDate, duration,
     createdAt: serverTimestamp(),
   })
   return ref.id

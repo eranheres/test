@@ -1,6 +1,6 @@
 import { useEvent, submitResponse } from '../hooks/useEvent.js'
 import RespondForm from '../components/RespondForm.jsx'
-import SummaryGrid from '../components/SummaryGrid.jsx'
+import WindowSummary from '../components/WindowSummary.jsx'
 import ShareableLink from '../components/ShareableLink.jsx'
 
 export default function EventPage({ id }) {
@@ -35,17 +35,30 @@ export default function EventPage({ id }) {
       <header className="app-header">
         <a href="#/" className="back-link">← New event</a>
         <h1>{event.name}</h1>
+        <p className="subtitle">
+          {event.duration}-day trip · mark the days you can't make it
+        </p>
       </header>
 
       <div className="event-body">
         <section className="card respond-section">
           <h2>Mark your availability</h2>
-          <RespondForm eventId={id} dates={event.dates} onSubmit={handleSubmit} />
+          <RespondForm
+            eventId={id}
+            startDate={event.startDate}
+            endDate={event.endDate}
+            onSubmit={handleSubmit}
+          />
         </section>
 
         <section className="card summary-section">
-          <h2>Group summary</h2>
-          <SummaryGrid dates={event.dates} responses={responses} />
+          <h2>Best {event.duration}-day windows</h2>
+          <WindowSummary
+            startDate={event.startDate}
+            endDate={event.endDate}
+            duration={event.duration}
+            responses={responses}
+          />
           <div className="share-row">
             <span className="share-label">Share link:</span>
             <ShareableLink eventId={id} />

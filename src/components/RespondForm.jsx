@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import DateCard from './DateCard.jsx'
+import Calendar from './Calendar.jsx'
 
-export default function RespondForm({ eventId, dates, onSubmit }) {
+export default function RespondForm({ eventId, startDate, endDate, onSubmit }) {
   const [name, setName] = useState('')
   const [votes, setVotes] = useState({})
   const [submitting, setSubmitting] = useState(false)
@@ -24,13 +24,16 @@ export default function RespondForm({ eventId, dates, onSubmit }) {
     )
   }
 
+  function handleDayChange(date, val) {
+    setVotes(prev => ({ ...prev, [date]: val }))
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (!name.trim()) return
     setSubmitting(true)
     try {
-      const fullVotes = Object.fromEntries(dates.map(d => [d, votes[d] ?? null]))
-      await onSubmit(name.trim(), fullVotes)
+      await onSubmit(name.trim(), votes)
       localStorage.setItem(alreadyKey, '1')
       setSubmitted(true)
     } finally {
@@ -52,16 +55,12 @@ export default function RespondForm({ eventId, dates, onSubmit }) {
         />
       </div>
 
-      <div className="date-list">
-        {dates.map(d => (
-          <DateCard
-            key={d}
-            date={d}
-            value={votes[d] ?? null}
-            onChange={val => setVotes(prev => ({ ...prev, [d]: val }))}
-          />
-        ))}
-      </div>
+      <Calendar
+        startDate={startDate}
+        endDate={endDate}
+        votes={votes}
+        onChange={handleDayChange}
+      />
 
       <button
         type="submit"

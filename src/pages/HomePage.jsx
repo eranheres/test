@@ -6,11 +6,11 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  async function handleCreate(name, dates) {
+  async function handleCreate(name, startDate, endDate, duration) {
     setLoading(true)
     setError(null)
     try {
-      const id = await createEvent(name, dates)
+      const id = await createEvent(name, startDate, endDate, duration)
       window.location.hash = `#/event/${id}`
     } catch (e) {
       setError('Failed to create event. Check your Firebase config.')
