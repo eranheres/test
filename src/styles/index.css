@@ -129,8 +129,9 @@ input[type="text"]:focus, input[type="date"]:focus {
 .day-cant   { background: var(--red-bg) !important;    border-color: var(--red) !important; }
 .calendar-legend {
   display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
-  margin-top: 0.75rem; font-size: 0.78rem; color: var(--muted);
+  font-size: 0.78rem; color: var(--muted);
 }
+.calendar-legend-top { margin-bottom: 0.75rem; }
 .legend-item { display: flex; align-items: center; gap: 0.3rem; }
 .legend-swatch {
   display: inline-block; width: 14px; height: 14px;
@@ -140,6 +141,34 @@ input[type="text"]:focus, input[type="date"]:focus {
 .swatch-prefer { background: var(--yellow-bg); border-color: var(--yellow); }
 .swatch-cant   { background: var(--red-bg);    border-color: var(--red); }
 .legend-hint { margin-left: auto; font-style: italic; }
+
+/* Selection summary */
+.selection-summary {
+  margin: 0.75rem 0; padding: 0.75rem;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: #f8fafc; font-size: 0.85rem;
+}
+.summary-title { font-weight: 600; margin-bottom: 0.4rem; color: var(--muted); }
+.summary-row { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.25rem; line-height: 1.5; }
+.summary-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot-cant   { background: var(--red); }
+.dot-prefer { background: var(--yellow); }
+
+/* How it works */
+.how-it-works {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem; background: #eff6ff;
+  border: 1px solid #bfdbfe; border-radius: var(--radius);
+  font-size: 0.88rem; color: #1e3a5f;
+}
+.hiw-step { display: flex; align-items: baseline; gap: 0.6rem; }
+.hiw-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #6366f1; color: #fff; font-size: 0.72rem; font-weight: 700;
+  flex-shrink: 0;
+}
 
 /* WindowSummary */
 .window-list { display: flex; flex-direction: column; gap: 0.5rem; }

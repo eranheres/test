@@ -1,6 +1,32 @@
 import { useState } from 'react'
 import Calendar from './Calendar.jsx'
 
+function formatDate(iso) {
+  const [y, m, d] = iso.split('-')
+  return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+}
+
+function SelectionSummary({ votes }) {
+  const cant = Object.keys(votes).filter(d => votes[d] === 'cant').sort()
+  const prefer = Object.keys(votes).filter(d => votes[d] === 'prefer_not').sort()
+  if (!cant.length && !prefer.length) return null
+  return (
+    <div className="selection-summary">
+      <div className="summary-title">Your selections:</div>
+      {cant.length > 0 && (
+        <div className="summary-row summary-cant">
+          <span className="summary-dot dot-cant" /> Can't join ({cant.length}): {cant.map(formatDate).join(', ')}
+        </div>
+      )}
+      {prefer.length > 0 && (
+        <div className="summary-row summary-prefer">
+          <span className="summary-dot dot-prefer" /> Prefer not ({prefer.length}): {prefer.map(formatDate).join(', ')}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function RespondForm({ eventId, startDate, endDate, onSubmit }) {
   const [name, setName] = useState('')
   const [votes, setVotes] = useState({})
@@ -61,6 +87,8 @@ export default function RespondForm({ eventId, startDate, endDate, onSubmit }) {
         votes={votes}
         onChange={handleDayChange}
       />
+
+      <SelectionSummary votes={votes} />
 
       <button
         type="submit"

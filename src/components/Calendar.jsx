@@ -45,6 +45,12 @@ export default function Calendar({ startDate, endDate, votes = {}, onChange, rea
 
   return (
     <div className="calendar-root">
+      <div className="calendar-legend calendar-legend-top">
+        <span className="legend-item"><span className="legend-swatch swatch-ok" /> Available</span>
+        <span className="legend-item"><span className="legend-swatch swatch-prefer" /> Prefer not</span>
+        <span className="legend-item"><span className="legend-swatch swatch-cant" /> Can't join</span>
+        {!readOnly && <span className="legend-hint">Tap a day to cycle through states</span>}
+      </div>
       <div className="calendar-months">
         {months.map(({ year, month }) => {
           const total = daysInMonth(year, month)
