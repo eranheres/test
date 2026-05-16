@@ -40,12 +40,6 @@ export default function EventPage({ id }) {
         </p>
       </header>
 
-      <div className="how-it-works">
-        <div className="hiw-step"><span className="hiw-num">1</span> Enter your name below</div>
-        <div className="hiw-step"><span className="hiw-num">2</span> Tap days on the calendar to mark when you can't join or prefer not to</div>
-        <div className="hiw-step"><span className="hiw-num">3</span> Hit save — the app finds the best {event.duration}-day window for the whole group</div>
-      </div>
-
       <div className="event-body">
         <section className="card respond-section">
           <h2>Mark your availability</h2>

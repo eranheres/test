@@ -47,9 +47,9 @@ export default function Calendar({ startDate, endDate, votes = {}, onChange, rea
     <div className="calendar-root">
       <div className="calendar-legend calendar-legend-top">
         <span className="legend-item"><span className="legend-swatch swatch-ok" /> Available</span>
-        <span className="legend-item"><span className="legend-swatch swatch-prefer" /> Prefer not</span>
-        <span className="legend-item"><span className="legend-swatch swatch-cant" /> Can't join</span>
-        {!readOnly && <span className="legend-hint">Tap a day to cycle through states</span>}
+        <span className="legend-item"><span className="legend-swatch swatch-prefer" /> 1 tap: Prefer not</span>
+        <span className="legend-item"><span className="legend-swatch swatch-cant" /> 2 taps: Can't join</span>
+        {!readOnly && <span className="legend-item legend-reset">3 taps: reset to available</span>}
       </div>
       <div className="calendar-months">
         {months.map(({ year, month }) => {
@@ -71,7 +71,7 @@ export default function Calendar({ startDate, endDate, votes = {}, onChange, rea
                   const vote = votes[iso] ?? null
                   const cls = [
                     'day-cell',
-                    !inRange ? 'day-out' : '',
+                    !inRange ? 'day-out' : 'day-avail',
                     inRange && vote === 'prefer_not' ? 'day-prefer' : '',
                     inRange && vote === 'cant' ? 'day-cant' : '',
                     inRange && !readOnly ? 'day-clickable' : '',
@@ -96,14 +96,6 @@ export default function Calendar({ startDate, endDate, votes = {}, onChange, rea
           )
         })}
       </div>
-      {!readOnly && (
-        <div className="calendar-legend">
-          <span className="legend-item"><span className="legend-swatch swatch-ok" /> Available</span>
-          <span className="legend-item"><span className="legend-swatch swatch-prefer" /> Prefer not</span>
-          <span className="legend-item"><span className="legend-swatch swatch-cant" /> Can't join</span>
-          <span className="legend-hint">Click a day to cycle through states</span>
-        </div>
-      )}
     </div>
   )
 }
