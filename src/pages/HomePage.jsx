@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <div className="page center-page">
       <header className="app-header">
-        <img src="./TTDevLogo.png" alt="Logo" className="logo" />
+        <img src="./spyder.svg" alt="Logo" className="logo" />
         <h1>When Can We Meet?</h1>
         <p className="subtitle">Create an event, share the link, and find the best date for everyone.</p>
       </header>

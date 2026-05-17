@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react'
+
 function addDays(iso, n) {
   const d = new Date(iso + 'T00:00:00')
   d.setDate(d.getDate() + n)
@@ -21,7 +23,7 @@ function daysInMonth(year, month) {
 }
 
 function firstWeekday(year, month) {
-  return (new Date(year, month, 1).getDay() + 6) % 7 // Mon=0 … Sun=6
+  return (new Date(year, month, 1).getDay() + 6) % 7
 }
 
 function isoDate(year, month, day) {
@@ -31,25 +33,79 @@ function isoDate(year, month, day) {
 const MONTH_NAMES = ['January','February','March','April','May','June',
                      'July','August','September','October','November','December']
 const WEEKDAYS = ['Mo','Tu','We','Th','Fr','Sa','Su']
-
 const CYCLE = { null: 'prefer_not', prefer_not: 'cant', cant: null }
 
 export default function Calendar({ startDate, endDate, votes = {}, onChange, readOnly = false }) {
   const months = monthsBetween(startDate, endDate)
+  const containerRef = useRef(null)
 
-  function handleClick(iso) {
-    if (readOnly) return
-    const cur = votes[iso] ?? null
-    onChange(iso, CYCLE[cur])
+  // Use refs so event listeners always see latest values without re-registering
+  const votesRef = useRef(votes)
+  const onChangeRef = useRef(onChange)
+  const startDateRef = useRef(startDate)
+  const endDateRef = useRef(endDate)
+  useEffect(() => { votesRef.current = votes }, [votes])
+  useEffect(() => { onChangeRef.current = onChange }, [onChange])
+  useEffect(() => { startDateRef.current = startDate }, [startDate])
+  useEffect(() => { endDateRef.current = endDate }, [endDate])
+
+  const drag = useRef({ active: false, targetState: null, applied: new Set() })
+
+  function startDrag(iso) {
+    const cur = votesRef.current[iso] ?? null
+    const targetState = CYCLE[String(cur)]
+    drag.current = { active: true, targetState, applied: new Set([iso]) }
+    onChangeRef.current(iso, targetState)
   }
 
+  function continueDrag(iso) {
+    const { active, targetState, applied } = drag.current
+    if (!active || applied.has(iso)) return
+    applied.add(iso)
+    onChangeRef.current(iso, targetState)
+  }
+
+  function endDrag() {
+    drag.current.active = false
+  }
+
+  // Register non-passive touchmove so we can preventDefault (stops page scroll during swipe)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el || readOnly) return
+
+    function onTouchMove(e) {
+      if (!drag.current.active) return
+      e.preventDefault()
+      const touch = e.touches[0]
+      const target = document.elementFromPoint(touch.clientX, touch.clientY)
+      const date = target?.dataset?.date
+      if (date && date >= startDateRef.current && date <= endDateRef.current) {
+        continueDrag(date)
+      }
+    }
+
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', endDrag)
+    el.addEventListener('touchcancel', endDrag)
+    el.addEventListener('mouseup', endDrag)
+    el.addEventListener('mouseleave', endDrag)
+    return () => {
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', endDrag)
+      el.removeEventListener('touchcancel', endDrag)
+      el.removeEventListener('mouseup', endDrag)
+      el.removeEventListener('mouseleave', endDrag)
+    }
+  }, [readOnly])
+
   return (
-    <div className="calendar-root">
+    <div className="calendar-root" ref={containerRef}>
       <div className="calendar-legend calendar-legend-top">
         <span className="legend-item"><span className="legend-swatch swatch-ok" /> Available</span>
         <span className="legend-item"><span className="legend-swatch swatch-prefer" /> 1 tap: Prefer not</span>
         <span className="legend-item"><span className="legend-swatch swatch-cant" /> 2 taps: Can't join</span>
-        {!readOnly && <span className="legend-item legend-reset">3 taps: reset to available</span>}
+        {!readOnly && <span className="legend-item legend-reset">3 taps: reset · swipe to select range</span>}
       </div>
       <div className="calendar-months">
         {months.map(({ year, month }) => {
@@ -80,12 +136,10 @@ export default function Calendar({ startDate, endDate, votes = {}, onChange, rea
                     <div
                       key={iso}
                       className={cls}
-                      onClick={() => inRange && handleClick(iso)}
-                      title={
-                        !inRange ? '' :
-                        vote === 'cant' ? "Can't join" :
-                        vote === 'prefer_not' ? 'Prefer not' : 'Available'
-                      }
+                      data-date={inRange ? iso : undefined}
+                      onMouseDown={() => !readOnly && inRange && startDrag(iso)}
+                      onMouseEnter={() => !readOnly && inRange && continueDrag(iso)}
+                      onTouchStart={!readOnly && inRange ? (e) => { e.preventDefault(); startDrag(iso) } : undefined}
                     >
                       {day}
                     </div>
