@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#1e293b"/>
+  <!-- Rear wheel -->
+  <circle cx="14" cy="44" r="10" fill="none" stroke="#94a3b8" stroke-width="2.5"/>
+  <circle cx="14" cy="44" r="2.5" fill="#94a3b8"/>
+  <!-- Front wheel -->
+  <circle cx="50" cy="44" r="10" fill="none" stroke="#94a3b8" stroke-width="2.5"/>
+  <circle cx="50" cy="44" r="2.5" fill="#94a3b8"/>
+  <!-- Frame / swing arm -->
+  <path d="M14 44 L26 25 L40 23 L50 44" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Fuel tank -->
+  <path d="M26 25 L40 23 L41 31 L24 31 Z" fill="#6366f1"/>
+  <!-- Seat -->
+  <path d="M19 31 L26 25 L24 31 Z" fill="#818cf8"/>
+  <!-- Engine block -->
+  <rect x="23" y="31" width="17" height="10" rx="2" fill="#4f46e5"/>
+  <!-- Front fork -->
+  <line x1="40" y1="23" x2="50" y2="34" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Handlebars -->
+  <line x1="40" y1="23" x2="35" y2="19" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="35" y1="19" x2="37" y2="23" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <!-- Exhaust pipe -->
+  <path d="M23 38 L14 42" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+</svg>
